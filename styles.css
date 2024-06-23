@@ -1,17 +1,25 @@
-body {
-background-color: #0A1012;
-  margin: 0;
-overflow: hidden;
+/* Basic styling for the game container and player */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
-#container{
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  height: 100% !important;
+.game-container {
+    width: 100%;
+    height: 100vh;
+    background-color: #f0f0f0;
+    position: relative;
+}
 
+.player {
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease-out; /* Smooth transition */
 }
-#canvas3d{
-  width: 100% !important;
-  height: 100% !important;
-}
+
