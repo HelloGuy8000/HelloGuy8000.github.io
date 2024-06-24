@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Drawing App</title>
+    <link rel="stylesheet" href="paint_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <div class="tools">
+            <button id="marker" class="tool active">Marker</button>
+            <button id="fill" class="tool">Fill</button>
+            <button id="undo" class="tool">Undo</button>
+            <button id="redo" class="tool">Redo</button>
+            <button id="clear" class="tool">Clear Canvas</button>
+            <input type="color" id="color-picker">
+            <label for="brush-size">Brush Size:</label>
+            <input type="range" id="brush-size" min="1" max="20" value="5">
+        </div>
+    </div>
+
+    <script src="paint_script.js"></script>
+</body>
+</html>
