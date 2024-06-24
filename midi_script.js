@@ -22,9 +22,37 @@ function handleMIDIMessage(message) {
     const note = data[1];
     const velocity = data[2];
 
-    const messageText = `Command: ${command}, Note: ${note}, Velocity: ${velocity}`;
-    const messageElement = document.createElement('li');
-    messageElement.textContent = messageText;
+    if (command === 144 && velocity > 0) {
+        playNote(note, velocity);
+    } else if (command === 128 || (command === 144 && velocity === 0)) {
+        stopNote();
+    }
+}
 
-    document.getElementById('messages').appendChild(messageElement);
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let oscillator;
+
+function playNote(note, velocity) {
+    oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.type = 'sine';  // You can change this to 'square', 'sawtooth', 'triangle'
+    oscillator.frequency.setValueAtTime(midiNoteToFrequency(note), audioContext.currentTime);
+    gainNode.gain.setValueAtTime(velocity / 127, audioContext.currentTime);
+
+    oscillator.start();
+}
+
+function stopNote() {
+    if (oscillator) {
+        oscillator.stop();
+        oscillator.disconnect();
+    }
+}
+
+function midiNoteToFrequency(note) {
+    return 440 * Math.pow(2, (note - 69) / 12);
 }
