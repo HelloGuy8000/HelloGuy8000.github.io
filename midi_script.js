@@ -16,6 +16,9 @@ function onMIDIFailure() {
     alert("Could not access your MIDI devices.");
 }
 
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const oscillators = {};
+
 function handleMIDIMessage(message) {
     const data = message.data;
     const command = data[0];
@@ -25,31 +28,35 @@ function handleMIDIMessage(message) {
     if (command === 144 && velocity > 0) {
         playNote(note, velocity);
     } else if (command === 128 || (command === 144 && velocity === 0)) {
-        stopNote();
+        stopNote(note);
     }
 }
 
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-let oscillator;
-
 function playNote(note, velocity) {
-    oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    if (!oscillators[note]) {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
 
-    oscillator.type = 'sine';  // You can change this to 'square', 'sawtooth', 'triangle'
-    oscillator.frequency.setValueAtTime(midiNoteToFrequency(note), audioContext.currentTime);
-    gainNode.gain.setValueAtTime(velocity / 127, audioContext.currentTime);
+        oscillator.type = 'sine';  // You can change this to 'square', 'sawtooth', 'triangle'
+        oscillator.frequency.setValueAtTime(midiNoteToFrequency(note), audioContext.currentTime);
+        gainNode.gain.setValueAtTime(velocity / 127, audioContext.currentTime);
 
-    oscillator.start();
+        oscillator.start();
+
+        oscillators[note] = { oscillator, gainNode };
+    }
 }
 
-function stopNote() {
-    if (oscillator) {
-        oscillator.stop();
+function stopNote(note) {
+    if (oscillators[note]) {
+        const { oscillator, gainNode } = oscillators[note];
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime + 0.1);  // Fade out
+        oscillator.stop(audioContext.currentTime + 0.1);
         oscillator.disconnect();
+        delete oscillators[note];
     }
 }
 
