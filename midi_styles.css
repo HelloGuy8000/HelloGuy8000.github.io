@@ -29,17 +29,3 @@ button {
 button:hover {
     background-color: #0056b3;
 }
-
-#midi-data {
-    margin-top: 20px;
-}
-
-#midi-data ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-#midi-data li {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
