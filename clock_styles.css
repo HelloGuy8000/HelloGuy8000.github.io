@@ -1,0 +1,84 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    margin: 0;
+    font-family: 'Roboto Mono', monospace; /* Cool font */
+}
+
+.clock {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 5px solid #0ff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.hand {
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background: #0ff;
+    top: 50%;
+    transform-origin: 100%;
+    transform: rotate(90deg);
+    transition: transform 0.1s ease-in-out;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.hour {
+    height: 3px;
+    background: #0f0; /* Green color */
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); /* Neon glow effect */
+}
+
+.minute {
+    height: 2px;
+    background: #0ff; /* Cyan color */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.second {
+    height: 1px;
+    background: #f0f; /* Magenta color */
+    box-shadow: 0 0 5px rgba(255, 0, 255, 0.7);
+}
+
+.center {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #0ff;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.color-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.neon {
+    position: relative;
+    display: inline-block;
+    font-size: inherit;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Neon glow effect */
+}
+
+.neon-text {
+    font-weight: normal;
+    color: #fff;
+}
+
+.green { color: #0f0; }
+.cyan { color: #0ff; }
+.magenta { color: #f0f; }
